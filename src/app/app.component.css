@@ -1,0 +1,142 @@
+/* src/app/app.component.css */
+.app-navbar {
+    background-color: var(--background-card);
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between; /* Espaço entre o brand e os itens de navegação */
+    align-items: center;
+    box-shadow: 0 2px 4px var(--shadow-color);
+
+    position: fixed; /* Fixa o elemento na tela */
+    top: 0; /* Alinha no topo */
+    left: 0; /* Alinha à esquerda */
+    width: 100%; /* Ocupa toda a largura */
+    z-index: 1000; /* Garante que ele fique acima de outros conteúdos ao rolar */
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-granatum-blue);
+}
+
+.navbar-nav {
+    list-style: none;
+    display: flex;
+    gap: var(--spacing-xl);
+    margin: 0;
+    padding: 0;
+    align-items: center; /* Alinha verticalmente os itens da nav */
+}
+
+.nav-link {
+    color: var(--text-color-body);
+    font-weight: 500;
+    padding: var(--spacing-sm) 0;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: var(--primary-granatum-blue);
+    text-decoration: none;
+}
+
+/* Estilos para o botão Sair */
+.logout-button-container {
+    margin-left: var(--spacing-xl); /* Espaçamento à esquerda do botão Sair */
+}
+
+.btn-logout {
+    background-color: transparent; /* <--- CORREÇÃO: Fundo transparente */
+    color: var(--primary-granatum-blue); /* <--- CORREÇÃO: Texto azul */
+    border: 1px solid var(--primary-granatum-blue); /* <--- CORREÇÃO: Borda azul */
+    border-radius: var(--border-radius-lg); /* Arredondado */
+    padding: var(--spacing-sm) var(--spacing-md);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease; /* Adiciona transição para a borda */
+    display: flex; /* Para alinhar ícone e texto */
+    align-items: center;
+}
+
+.btn-logout:hover {
+    background-color: var(--primary-granatum-blue); /* <--- CORREÇÃO: Fundo azul ao passar o mouse */
+    color: white; /* <--- CORREÇÃO: Texto branco ao passar o mouse */
+    border-color: var(--primary-granatum-blue); /* <--- CORREÇÃO: Borda azul ao passar o mouse */
+}
+
+.logout-icon {
+    margin-right: var(--spacing-xs); /* Espaço entre o ícone e o texto */
+    font-size: 1.2rem; /* Tamanho do ícone */
+}
+
+
+/* Conteúdo principal da aplicação */
+.app-main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--spacing-xl);
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+
+    padding-top: calc(var(--spacing-xl) + 60px); /* Compensa a altura do navbar fixo (ajuste 60px se necessário) */
+}
+
+/* Garante que o html e body ocupem 100% da tela e permitam o flexbox do app-root */
+html, body {
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+app-root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Responsividade básica (Mobile-first) */
+@media (max-width: 768px) {
+    .app-navbar {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-bottom: var(--spacing-md); /* Adicionar padding na parte inferior do navbar em mobile */
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        width: 100%;
+        gap: var(--spacing-sm);
+        margin-top: var(--spacing-md);
+    }
+
+    .nav-item {
+        width: 100%;
+        text-align: center;
+    }
+
+    .nav-link {
+        display: block;
+        padding: var(--spacing-sm) 0;
+        border-top: 1px solid var(--border-color);
+    }
+
+    .logout-button-container {
+        margin-left: 0; /* Remove margem extra em mobile */
+        width: 100%;
+        margin-top: var(--spacing-md); /* Espaçamento para o botão de logout */
+        border-top: 1px solid var(--border-color);
+        padding-top: var(--spacing-md);
+    }
+
+    .app-main-content {
+        padding: var(--spacing-md);
+        margin: var(--spacing-md) auto;
+        padding-top: calc(var(--spacing-md) + 160px); /* Ajusta padding-top para navbar mais alto em mobile */
+    }
+}

@@ -1,0 +1,54 @@
+<div class="currency-container">
+  <h2>Consulta de Câmbio</h2>
+
+  <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+    {{ message }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    Carregando taxas de câmbio...
+  </div>
+
+  <div class="section card" *ngIf="!isLoading">
+    <h3>Consultar Taxas por Moeda Base</h3>
+    <div class="form-group">
+      <label for="baseCurrency">Moeda Base:</label>
+      <select id="baseCurrency" name="baseCurrency" [(ngModel)]="baseCurrency" (change)="getRates()">
+        <option *ngFor="let currency of availableCurrencies" [value]="currency">{{ currency }}</option>
+      </select>
+    </div>
+    <button type="button" class="btn-primary" (click)="getRates()">Atualizar Taxas</button>
+  </div>
+
+  <div class="section card" *ngIf="allRates && !isLoading">
+    <h3>Converter Moedas</h3>
+    <div class="form-group">
+      <label for="amountToConvert">Valor ({{ baseCurrency }}):</label>
+      <input type="number" id="amountToConvert" name="amountToConvert" [(ngModel)]="amountToConvert" (input)="performConversion()" min="0.01" step="0.01">
+    </div>
+    <div class="form-group">
+      <label for="targetCurrency">Para:</label>
+      <select id="targetCurrency" name="targetCurrency" [(ngModel)]="targetCurrency" (change)="performConversion()">
+        <option *ngFor="let rateKey of (allRates | keyvalue)" [value]="rateKey.key">{{ rateKey.key }}</option>
+      </select>
+    </div>
+    <div class="conversion-result">
+      <p *ngIf="convertedAmount !== null">
+        {{ amountToConvert | currency:baseCurrency:'symbol':'1.2-2' }} =
+        <span class="converted-amount">{{ convertedAmount | currency:targetCurrency:'symbol':'1.2-2' }}</span>
+      </p>
+      <p *ngIf="conversionRate !== null">Taxa: 1 {{ baseCurrency }} = {{ conversionRate | number:'1.4-4' }} {{ targetCurrency }}</p>
+      <p *ngIf="convertedAmount === null && !message">Insira um valor para converter.</p>
+    </div>
+  </div>
+
+  <div class="section card" *ngIf="allRates && !isLoading">
+    <h3>Todas as Taxas para {{ baseCurrency }}</h3>
+    <p *ngIf="(allRates | keyvalue).length === 0">Nenhuma taxa de conversão encontrada para {{ baseCurrency }}.</p>
+    <div class="rates-grid">
+      <div class="rate-item" *ngFor="let rate of (allRates | keyvalue)">
+        <strong>{{ rate.key }}</strong>: {{ rate.value | number:'1.4-4' }}
+      </div>
+    </div>
+  </div>
+</div>

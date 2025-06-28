@@ -1,0 +1,84 @@
+<div class="reports-container">
+  <h2>Relatórios Financeiros</h2>
+
+  <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+    {{ message }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    Carregando... Por favor, aguarde.
+  </div>
+
+  <div class="balance-section card" *ngIf="!isLoading">
+    <h3>Balanço Geral</h3>
+    <p *ngIf="userBalance">Seu Balanço Atual: <span class="balance-amount" [ngClass]="{'positive': userBalance.balance >= 0, 'negative': userBalance.balance < 0}">{{ userBalance.balance | currency:'BRL':'symbol':'1.2-2' }}</span></p>
+    <p *ngIf="!userBalance && !isError && !message">Nenhum balanço encontrado.</p>
+  </div>
+
+  <div class="filters-section card" *ngIf="!isLoading">
+    <h3>Filtrar Transações</h3>
+    <div class="filter-group">
+      <label for="filterStartDate">Data Início:</label>
+      <input type="date" id="filterStartDate" name="startDate" [(ngModel)]="startDate">
+    </div>
+    <div class="filter-group">
+      <label for="filterEndDate">Data Fim:</label>
+      <input type="date" id="filterEndDate" name="endDate" [(ngModel)]="endDate">
+    </div>
+    <div class="filter-group">
+      <label for="filterCategory">Categoria:</label>
+      <select id="filterCategory" name="selectedCategoryId" [(ngModel)]="selectedCategoryId">
+        <option value="all">Todas as Categorias</option>
+        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }} ({{ category.type }})</option>
+      </select>
+    </div>
+    <button type="button" class="btn-primary" (click)="filterTransactions()" [disabled]="isLoading">Aplicar Filtro</button>
+  </div>
+
+  <div class="charts-section card" *ngIf="!isLoading">
+    <h3>Visão Geral das Despesas por Categoria</h3>
+    <div class="chart-container" style="display: block;">
+      <canvas baseChart
+              [data]="pieChartData"
+              [options]="pieChartOptions"
+              [type]="pieChartType">
+      </canvas>
+    </div>
+
+    <h3>Visão Geral das Receitas por Categoria</h3>
+    <div class="chart-container" style="display: block;">
+      <canvas baseChart
+              [data]="barChartData"
+              [options]="barChartOptions"
+              [type]="barChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="filtered-transactions-section card" *ngIf="!isLoading">
+    <h3>Transações Filtradas</h3>
+    <p *ngIf="filteredTransactions.length === 0 && !message">Use os filtros acima para encontrar transações.</p>
+    <table *ngIf="filteredTransactions.length > 0">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Data</th>
+        <th>Categoria</th>
+        <th>Tipo</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let transaction of filteredTransactions">
+        <td>{{ transaction.id }}</td>
+        <td>{{ transaction.description }}</td>
+        <td>{{ transaction.amount | currency:'BRL':'symbol':'1.2-2' }}</td>
+        <td>{{ transaction.date | date:'dd/MM/yyyy' }}</td>
+        <td>{{ getCategoryName(transaction.categoryId) }}</td>
+        <td>{{ transaction.type }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<div class="categories-container">
+  <h2>Gerenciar Categorias</h2>
+
+  <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+    {{ message }}
+  </div>
+
+  <div *ngIf="isLoading" class="loading-indicator">
+    Carregando... Por favor, aguarde.
+  </div>
+
+  <div class="form-section" *ngIf="!selectedCategory && !isLoading"> <h3>Adicionar Nova Categoria</h3>
+    <form (ngSubmit)="addCategory()">
+      <div class="form-group">
+        <label for="newCategoryName">Nome:</label>
+        <input type="text" id="newCategoryName" name="newCategoryName" [(ngModel)]="newCategory.name" required>
+      </div>
+      <div class="form-group">
+        <label for="newCategoryType">Tipo:</label>
+        <select id="newCategoryType" name="newCategoryType" [(ngModel)]="newCategory.type" required>
+          <option value="RECEITA">Receita</option>
+          <option value="DESPESA">Despesa</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Adicionar Categoria</button>
+    </form>
+  </div>
+
+  <div class="form-section" *ngIf="selectedCategory && !isLoading"> <h3>Editar Categoria</h3>
+    <form (ngSubmit)="updateCategory()">
+      <div class="form-group">
+        <label for="editCategoryName">Nome:</label>
+        <input type="text" id="editCategoryName" name="editCategoryName" [(ngModel)]="selectedCategory.name" required>
+      </div>
+      <div class="form-group">
+        <label for="editCategoryType">Tipo:</label>
+        <select id="editCategoryType" name="editCategoryType" [(ngModel)]="selectedCategory.type" required>
+          <option value="RECEITA">Receita</option>
+          <option value="DESPESA">Despesa</option>
+        </select>
+      </div>
+      <button type="submit" class="btn-primary">Atualizar Categoria</button>
+      <button type="button" class="btn-secondary" (click)="cancelEdit()">Cancelar</button>
+    </form>
+  </div>
+
+  <div class="list-section">
+    <h3>Minhas Categorias</h3>
+    <p *ngIf="categories.length === 0 && !isLoading && !message">Nenhuma categoria encontrada.</p>
+    <table *ngIf="categories.length > 0 && !isLoading">
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Tipo</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let category of categories">
+        <td>{{ category.id }}</td>
+        <td>{{ category.name }}</td>
+        <td>{{ category.type }}</td>
+        <td>
+          <button class="btn-edit" (click)="editCategory(category)">Editar</button>
+          <button class="btn-delete" (click)="deleteCategory(category.id!)">Excluir</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,167 @@
+/* src/app/components/reports/reports.component.css */
+.reports-container {
+  padding: 2rem;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: Arial, sans-serif;
+}
+
+h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 2rem;
+}
+
+.card {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.balance-section h3 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+.balance-amount {
+  font-size: 1.8rem;
+  font-weight: bold;
+  display: block;
+  text-align: center;
+  margin-top: 1rem;
+}
+
+.positive {
+  color: #28a745; /* Verde */
+}
+
+.negative {
+  color: #dc3545; /* Vermelho */
+}
+
+.filters-section h3 {
+  margin-bottom: 1.5rem;
+  color: #555;
+}
+
+.filter-group {
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.filter-group label {
+  font-weight: bold;
+  color: #555;
+  flex-basis: 80px;
+}
+
+.filter-group input[type="date"],
+.filter-group select {
+  flex-grow: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.btn-primary:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+.btn-primary:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.message {
+  margin-top: 1rem;
+  padding: 10px;
+  border-radius: 4px;
+  text-align: center;
+  font-weight: bold;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.message.success {
+  background-color: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.message.error {
+  background-color: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.loading-indicator {
+  text-align: center;
+  padding: 20px;
+  font-weight: bold;
+  color: #007bff;
+  background-color: #e9f7ff;
+  border: 1px solid #cceeff;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.filtered-transactions-section h3 {
+  margin-bottom: 1rem;
+  color: #555;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+table th, table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: left;
+}
+
+table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+/* Estilos para a seção de gráficos */
+.charts-section {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    align-items: center; /* Centraliza os gráficos */
+}
+
+.charts-section h3 {
+    width: 100%; /* Ocupa a largura total para centralizar o texto */
+}
+
+.chart-container {
+    width: 100%; /* Garante que o canvas ocupe o espaço disponível */
+    max-width: 600px; /* Limita o tamanho máximo do gráfico para melhor visualização */
+    margin: 0 auto; /* Centraliza o container do gráfico */
+}

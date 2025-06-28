@@ -1,0 +1,108 @@
+/* src/app/components/login/login.component.css */
+
+.login-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Ocupa a altura total da viewport */
+  background-color: #1ab8df; /* <--- CORREÇÃO AQUI: Fundo EXATO que você pediu */
+  padding: var(--spacing-xl);
+  box-sizing: border-box; /* Inclui padding na altura total */
+}
+
+.login-card {
+  background-color: var(--background-card); /* Fundo branco */
+  padding: var(--spacing-xl) var(--spacing-lg);
+  border-radius: var(--border-radius-md); /* Bordas arredondadas */
+  box-shadow: 0 8px 30px var(--shadow-color); /* <--- NOVO: Sombra mais pronunciada e moderna */
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  transition: all 0.3s ease-in-out; /* Adiciona transição para efeitos hover/focus */
+}
+
+.login-card:hover {
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15); /* Sombra um pouco mais forte ao passar o mouse */
+}
+
+.login-card h2 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-lg);
+  text-transform: uppercase;
+}
+
+.form-group {
+  margin-bottom: var(--spacing-md);
+  text-align: left;
+}
+
+.login-card input {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--border-color);
+    font-size: var(--font-size-base);
+    color: var(--text-color-heading);
+    background-color: var(--background-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.login-card input:focus {
+    outline: none;
+    border-color: var(--primary-granatum-blue);
+    box-shadow: 0 0 0 3px rgba(0, 151, 215, 0.25); /* Sombra azul para foco */
+}
+.login-card input::placeholder {
+  color: var(--text-color-light);
+}
+
+.btn-submit {
+  width: 100%;
+  margin-top: var(--spacing-md);
+  /* Já herda de .btn-primary em styles.css */
+}
+
+.forgot-password-link {
+  margin-top: var(--spacing-sm);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.forgot-password-link a {
+  color: var(--primary-granatum-blue);
+  text-decoration: none;
+}
+.forgot-password-link a:hover {
+  text-decoration: underline;
+}
+
+.register-link {
+  margin-top: var(--spacing-xl);
+  padding-top: var(--spacing-lg);
+  border-top: 1px solid #f0f0f0;
+  font-size: 0.9rem;
+  text-align: center;
+}
+.register-link p {
+    color: var(--text-color-body);
+    margin-bottom: var(--spacing-xs);
+}
+
+.register-link a {
+  color: var(--primary-granatum-blue);
+  text-decoration: none;
+  font-weight: 600;
+}
+.register-link a:hover {
+  text-decoration: underline;
+}
+
+/* Responsividade para mobile */
+@media (max-width: 600px) {
+  .login-page-container {
+    padding: var(--spacing-md);
+  }
+  .login-card {
+    padding: var(--spacing-lg) var(--spacing-md);
+  }
+}

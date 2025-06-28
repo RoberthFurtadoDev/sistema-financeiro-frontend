@@ -1,0 +1,249 @@
+/* src/styles.css */
+
+/* Importar variáveis CSS */
+@import './app/styles/_variables.css';
+
+/* Importar fontes do Google Fonts (opcional, pode ser no index.html também) */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;600;700&family=Open+Sans:wght@400;600;700&display=swap');
+
+/* Reset Básico */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: var(--font-family-base);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-base);
+    color: var(--text-color-body);
+    background-color: #1ab8df; /* A cor que você solicitou: rgba(26,184,223,255) */
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+/* Estilos de Títulos */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-color-heading);
+    margin-bottom: var(--spacing-md);
+    font-weight: 700;
+}
+
+h1 { font-size: 2.5rem; }
+h2 { font-size: 2rem; }
+h3 { font-size: 1.75rem; }
+
+/* Links */
+a {
+    color: var(--primary-granatum-blue);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--primary-granatum-blue-dark);
+    text-decoration: underline;
+}
+
+/* Estilos para cards */
+.card {
+    background-color: var(--background-card);
+    padding: var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 4px 8px var(--shadow-color);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Estilos de Botões base */
+.btn-primary, .btn-secondary, .btn-edit, .btn-delete, .btn-submit {
+    padding: var(--spacing-md) var(--spacing-lg);
+    border: none;
+    border-radius: var(--border-radius-lg);
+    cursor: pointer;
+    font-size: var(--font-size-base);
+    font-weight: 600;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    text-transform: uppercase;
+}
+
+/* Botão Primário (Principal, como "ACESSAR") */
+.btn-primary {
+    background-color: var(--primary-granatum-blue); /* AZUL PRINCIPAL DO GRANATUM */
+    color: white;
+    border-radius: var(--border-radius-lg);
+    padding: 0.75rem 1.5rem;
+}
+.btn-primary:hover:not(:disabled) {
+    background-color: var(--primary-granatum-blue-dark);
+}
+
+/* Botão Secundário (se houver) */
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: var(--text-color-body);
+}
+.btn-secondary:hover:not(:disabled) {
+    background-color: #d0d0d0;
+}
+
+/* Botões de Edição e Exclusão (em tabelas, etc.) */
+.btn-edit {
+    background-color: var(--primary-granatum-blue);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+}
+.btn-edit:hover:not(:disabled) {
+    background-color: var(--primary-granatum-blue-dark);
+}
+
+.btn-delete {
+    background-color: var(--error-color);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+}
+.btn-delete:hover:not(:disabled) {
+    background-color: #c82333;
+}
+
+/* Estado desabilitado dos botões */
+.btn-primary:disabled, .btn-secondary:disabled, .btn-edit:disabled, .btn-delete:disabled, .btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Formulários (Inputs, Selects, Textareas) */
+.form-group {
+    margin-bottom: var(--spacing-md);
+}
+.form-group label {
+    display: block;
+    margin-bottom: var(--spacing-xs);
+    font-weight: 600;
+    color: var(--text-color-body);
+}
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: var(--spacing-md);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--font-size-base);
+    color: var(--text-color-heading);
+    background-color: var(--background-card);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-granatum-blue);
+    box-shadow: 0 0 0 3px rgba(0, 151, 215, 0.25);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: var(--text-color-light);
+}
+
+/* Mensagens de feedback */
+.message {
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-sm);
+    text-align: center;
+    font-weight: 600;
+    margin-top: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+    opacity: 1;
+    transition: opacity 0.5s ease-in-out;
+}
+.message.success {
+    background-color: var(--success-color);
+    color: white;
+}
+.message.error {
+    background-color: var(--error-color);
+    color: white;
+}
+
+/* Indicador de carregamento */
+.loading-indicator {
+    text-align: center;
+    padding: var(--spacing-lg);
+    font-weight: 600;
+    color: var(--primary-granatum-blue);
+    background-color: var(--primary-granatum-blue-light);
+    border: 1px solid var(--primary-granatum-blue);
+    border-radius: var(--border-radius-md);
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Tabelas */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: var(--spacing-lg);
+    background-color: var(--background-card);
+    border-radius: var(--border-radius-md);
+    overflow: hidden;
+}
+
+table th, table td {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md);
+    text-align: left;
+    color: var(--text-color-body);
+}
+
+table th {
+    background-color: #f2f2f2;
+    font-weight: 700;
+    color: var(--text-color-heading);
+}
+
+table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+table tr:hover {
+    background-color: #f0f0f0;
+}
+
+/* Responsividade básica para tabelas */
+@media (max-width: 768px) {
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+    table thead, table tbody, table th, table td, table tr {
+        display: block;
+    }
+    table thead tr {
+        position: absolute;
+        top: -9999px;
+        left: -9999px;
+    }
+    table tr { border: 1px solid var(--border-color); margin-bottom: var(--spacing-sm); }
+    table td {
+        border: none;
+        border-bottom: 1px solid var(--border-color);
+        position: relative;
+        padding-left: 50%;
+        text-align: right;
+    }
+    table td:before {
+        position: absolute;
+        top: 6px;
+        left: 6px;
+        width: 45%;
+        padding-right: 10px;
+        white-space: nowrap;
+        content: attr(data-label);
+        font-weight: bold;
+        text-align: left;
+    }
+}

@@ -1,0 +1,34 @@
+<div class="user-settings-page-container">
+  <div class="user-settings-card card">
+    <h2>Configurações do Usuário</h2>
+
+    <div *ngIf="isLoading" class="loading-indicator">
+      Carregando perfil...
+    </div>
+
+    <div *ngIf="!isLoading && user">
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="username">Nome de Usuário</label>
+          <input type="text" id="username" name="username" [(ngModel)]="user.username" required>
+        </div>
+        <div class="form-group">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" [(ngModel)]="user.email" required>
+        </div>
+        <button type="submit" class="btn-primary btn-submit" [disabled]="isLoading">
+          <span *ngIf="!isLoading">Salvar Alterações</span>
+          <span *ngIf="isLoading">Salvando...</span>
+        </button>
+      </form>
+    </div>
+
+    <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+      {{ message }}
+    </div>
+
+    <div *ngIf="!isLoading && !user && !isError">
+      <p>Não foi possível carregar o perfil do usuário.</p>
+    </div>
+  </div>
+</div>

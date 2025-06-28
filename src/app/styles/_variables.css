@@ -1,0 +1,39 @@
+/* src/app/styles/_variables.css */
+
+/* Paleta de Cores (Refinada com suas sugestões e Granatum HTML) */
+:root {
+    --primary-granatum-blue: #0097D7; /* Azul principal dos botões e links (do HTML Granatum) */
+    --primary-granatum-blue-dark: #0088c4; /* Azul mais escuro para hover */
+    --primary-granatum-blue-light: #1ab8df; /* <--- CORREÇÃO: AZUL EXATO QUE VOCÊ GOSTOU PARA O FUNDO DO LOGIN */
+
+    --granatum-specific-green-1: #16d136; /* Seu verde (#16d136) */
+    --granatum-specific-green-2: #58ce80; /* Seu outro verde (#58ce80) */
+
+    --text-color-heading: #333333; /* Cor dos títulos e textos mais importantes */
+    --text-color-body: #555555; /* Cor do texto geral */
+    --text-color-light: #999999; /* Cor de placeholders e textos secundários */
+
+    --background-page: #F8F8F8; /* Fundo geral da maioria das páginas (neutro por padrão) */
+    --background-card: #ffffff; /* Fundo de cards e seções */
+    --border-color: #dddddd; /* Cor das bordas de inputs e cards */
+    --shadow-color: rgba(0, 0, 0, 0.1); /* Sombra para elementos como cards */
+
+    --success-color: #28a745; /* Verde para mensagens de sucesso */
+    --error-color: #dc3545; /* Vermelho para mensagens de erro e botões de exclusão */
+
+    /* Tipografia (Granatum usa Inter e Ondo, usando Open Sans/Lato como substitutos comuns) */
+    --font-family-base: 'Open Sans', 'Lato', sans-serif; /* Importar do Google Fonts no index.html */
+    --font-size-base: 1rem; /* 16px */
+    --line-height-base: 1.5;
+
+    /* Espaçamento e Bordas (Consistentes) */
+    --spacing-xs: 0.25rem; /* 4px */
+    --spacing-sm: 0.5rem;  /* 8px */
+    --spacing-md: 1rem;    /* 16px */
+    --spacing-lg: 1.5rem;  /* 24px */
+    --spacing-xl: 2rem;    /* 32px */
+
+    --border-radius-sm: 4px;
+    --border-radius-md: 8px;
+    --border-radius-lg: 20px; /* Para botões maiores como "Acessar" no Granatum */
+}

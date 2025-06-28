@@ -1,0 +1,25 @@
+<div class="login-page-container">
+  <div class="login-card">
+    <h2>Acesse sua conta</h2>
+    <form (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="email">E-mail</label> <input type="email" id="email" name="email" [(ngModel)]="model.email" required placeholder="Digite seu e-mail"> </div>
+      <div class="form-group">
+        <label for="password">Senha</label>
+        <input type="password" id="password" name="password" [(ngModel)]="model.password" required placeholder="Digite sua senha">
+      </div>
+      <button type="submit" class="btn-primary btn-submit">ACESSAR</button>
+    </form>
+
+    <div class="forgot-password-link">
+      <a routerLink="/forgot-password">Esqueci minha senha</a> </div>
+
+    <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+      {{ message }}
+    </div>
+
+    <div class="register-link">
+      <p>Não tem conta no Granatum? <a routerLink="/register">Cadastre-se</a></p>
+    </div>
+  </div>
+</div>

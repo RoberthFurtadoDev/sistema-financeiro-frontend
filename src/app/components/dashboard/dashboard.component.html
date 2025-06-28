@@ -1,0 +1,53 @@
+<div class="dashboard-container">
+  <div class="dashboard-header card">
+    <h2>Bem-vindo ao seu Dashboard Financeiro, {{ username }}!</h2>
+    <p class="tagline">Aqui você poderá ver suas categorias, transações e relatórios.</p>
+  </div>
+
+  <div class="dashboard-summary-section card">
+    <h3>Visão Geral Financeira</h3>
+    <div *ngIf="isLoading" class="loading-indicator">
+      Carregando resumos financeiros...
+    </div>
+    <div *ngIf="!isLoading">
+      <div class="summary-grid">
+        <div class="summary-item">
+          <h4>Balanço Atual</h4>
+          <p class="summary-value" [ngClass]="{'positive': userBalance !== null && userBalance >= 0, 'negative': userBalance !== null && userBalance < 0}">
+            {{ userBalance | currency:'BRL':'symbol':'1.2-2' }}
+          </p>
+        </div>
+        <div class="summary-item">
+          <h4>Receitas do Mês</h4>
+          <p class="summary-value positive">
+            {{ monthlyIncomes | currency:'BRL':'symbol':'1.2-2' }}
+          </p>
+        </div>
+        <div class="summary-item">
+          <h4>Despesas do Mês</h4>
+          <p class="summary-value negative">
+            {{ monthlyExpenses | currency:'BRL':'symbol':'1.2-2' }}
+          </p>
+        </div>
+      </div>
+      <div *ngIf="isError" class="message error">{{ message }}</div>
+    </div>
+  </div>
+
+  <div class="dashboard-charts-section card">
+    <h3>Gráficos Rápidos</h3>
+    <div class="charts-placeholder">
+      <p>Gráficos de Receitas vs Despesas e Despesas por Categoria apareceriam aqui.</p>
+    </div>
+  </div>
+
+  <div class="dashboard-quick-links card">
+    <h3>Ações Rápidas</h3>
+    <ul class="quick-links-list">
+      <li><a routerLink="/transactions" class="quick-link-btn">Adicionar Transação</a></li>
+      <li><a routerLink="/reports" class="quick-link-btn">Ver Relatórios Completos</a></li>
+      <li><a routerLink="/categories" class="quick-link-btn">Gerenciar Categorias</a></li>
+      <li><a routerLink="/currency" class="quick-link-btn">Consultar Câmbio</a></li>
+    </ul>
+  </div>
+</div>
