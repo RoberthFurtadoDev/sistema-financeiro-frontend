@@ -7,24 +7,51 @@
     </div>
 
     <div *ngIf="!isLoading && user">
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-group">
-          <label for="username">Nome de Usuário</label>
-          <input type="text" id="username" name="username" [(ngModel)]="user.username" required>
+      <section class="profile-section">
+        <h3>Meus Dados</h3>
+        <form (ngSubmit)="onSubmit()">
+          <div class="form-group">
+            <label for="username">Nome de Usuário</label>
+            <input type="text" id="username" name="username" [(ngModel)]="user.username" required>
+          </div>
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" [(ngModel)]="user.email" required>
+          </div>
+          <button type="submit" class="btn-primary btn-submit" [disabled]="isLoading">
+            <span *ngIf="!isLoading">Salvar Alterações</span>
+            <span *ngIf="isLoading">Salvando...</span>
+          </button>
+        </form>
+        <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
+          {{ message }}
         </div>
-        <div class="form-group">
-          <label for="email">E-mail</label>
-          <input type="email" id="email" name="email" [(ngModel)]="user.email" required>
-        </div>
-        <button type="submit" class="btn-primary btn-submit" [disabled]="isLoading">
-          <span *ngIf="!isLoading">Salvar Alterações</span>
-          <span *ngIf="isLoading">Salvando...</span>
-        </button>
-      </form>
-    </div>
+      </section>
 
-    <div *ngIf="message" class="message" [ngClass]="{'success': !isError, 'error': isError}">
-      {{ message }}
+      <section class="password-section">
+        <h3>Mudar Senha</h3>
+        <form (ngSubmit)="onChangePasswordSubmit()">
+          <div class="form-group">
+            <label for="oldPassword">Senha Antiga</label>
+            <input type="password" id="oldPassword" name="oldPassword" [(ngModel)]="oldPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="newPassword">Nova Senha</label>
+            <input type="password" id="newPassword" name="newPassword" [(ngModel)]="newPassword" required>
+          </div>
+          <div class="form-group">
+            <label for="confirmNewPassword">Confirmar Nova Senha</label>
+            <input type="password" id="confirmNewPassword" name="confirmNewPassword" [(ngModel)]="confirmNewPassword" required>
+          </div>
+          <button type="submit" class="btn-primary btn-submit" [disabled]="isPasswordLoading">
+            <span *ngIf="!isPasswordLoading">Alterar Senha</span>
+            <span *ngIf="isPasswordLoading">Alterando...</span>
+          </button>
+        </form>
+        <div *ngIf="passwordMessage" class="message" [ngClass]="{'success': !isPasswordError, 'error': isPasswordError}">
+          {{ passwordMessage }}
+        </div>
+      </section>
     </div>
 
     <div *ngIf="!isLoading && !user && !isError">
