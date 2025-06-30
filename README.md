@@ -99,8 +99,4 @@ Durante o desenvolvimento deste frontend Angular, várias decisões técnicas fo
 * Envie um Pull Request.
 
 ---
-
-Este `README.md` completo fornece uma visão clara do seu projeto frontend e das decisões que o moldaram.
-
----
 💻 Desenvolvido por: Roberth Furtado © 2025 | Todos os direitos reservados.
