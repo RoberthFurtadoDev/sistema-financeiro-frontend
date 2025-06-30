@@ -1,147 +1,137 @@
 /* src/app/components/transactions/transactions.component.css */
+
 .transactions-container {
-  padding: 2rem;
+  padding: var(--spacing-xl);
   max-width: 900px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family-base);
+  color: var(--text-color-body);
 }
 
-h2, h3 {
+h2 {
   text-align: center;
-  color: #333;
-  margin-bottom: 1.5rem;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-xl);
 }
 
-.form-section, .list-section {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
-}
-
-.form-group input,
-.form-group select {
-  width: calc(100% - 20px); /* 100% menos padding */
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box; /* Inclui padding e borda no width */
-}
-
-.btn-primary, .btn-secondary, .btn-edit, .btn-delete {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 1rem;
-  margin-right: 0.5rem; /* Espaço entre botões */
-}
-
-.btn-primary {
-  background-color: #28a745;
-  color: white;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: #218838;
-}
-.btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-
-.btn-secondary {
-  background-color: #6c757d;
-  color: white;
-}
-
-.btn-secondary:hover {
-  background-color: #5a6268;
-}
-
-.btn-edit {
-  background-color: #007bff;
-  color: white;
-}
-
-.btn-edit:hover {
-  background-color: #0056b3;
-}
-
-.btn-delete {
-  background-color: #dc3545;
-  color: white;
-}
-
-.btn-delete:hover {
-  background-color: #c82333;
-}
-
-/* Estilos para Mensagens */
-.message {
-  margin-top: 1rem;
-  padding: 10px;
-  border-radius: 4px;
-  text-align: center;
-  font-weight: bold;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-/* Estilos para Indicador de Carregamento */
-.loading-indicator {
-  text-align: center;
-  padding: 20px;
-  font-weight: bold;
-  color: #007bff;
-  background-color: #e9f7ff;
-  border: 1px solid #cceeff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1.5rem;
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px;
+h3 {
   text-align: left;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.5rem;
 }
 
-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
+/* Estilos de cards, forms, inputs e botões herdam de styles.css */
+
+/* Estilos específicos para a tabela de transações */
+table {
+  /* Herda da estilização global de tabelas em styles.css */
 }
 
-table tr:nth-child(even) {
-  background-color: #f9f9f9;
+/* Estilos para o container dos botões de ação dentro da célula da tabela */
+td .actions-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: var(--spacing-xs);
+    justify-content: flex-start;
+    align-items: center;
+    height: 100%;
+}
+
+.actions-container .btn-edit,
+.actions-container .btn-delete {
+    display: inline-flex;
+    width: auto;
+    flex-shrink: 0;
+    margin-right: 0;
+    padding: var(--spacing-xs) var(--spacing-sm);
+    font-size: 0.9rem;
+}
+
+/* --- REFINAMENTOS PARA MOBILE EM TRANSAÇÕES --- */
+@media (max-width: 768px) {
+  .transactions-container {
+    padding: var(--spacing-md);
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Force table to always be responsive with scroll */
+  .list-section table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  /* Adjust individual cells for better stacking */
+  .list-section table thead,
+  .list-section table tbody,
+  .list-section table th,
+  .list-section table td,
+  .list-section table tr {
+      display: block; /* <--- CRUCIAL para empilhar em mobile */
+  }
+
+  .list-section table tr {
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: var(--spacing-md);
+  }
+
+  .list-section table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+  }
+
+  .list-section table td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+      text-align: right;
+      white-space: normal; /* <--- CORREÇÃO: Permite que o texto quebre */
+  }
+
+  .list-section table td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: var(--spacing-md);
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight: bold;
+      text-align: left;
+      color: var(--text-color-heading);
+  }
+
+  .list-section table td:last-child {
+      border-bottom: none;
+  }
+
+  /* Ajustes específicos para a coluna de Ações em mobile */
+  .list-section table td:last-of-type {
+      padding-top: var(--spacing-md);
+      text-align: center;
+      padding-left: var(--spacing-md);
+  }
+  .list-section table td:last-of-type .actions-container {
+      flex-direction: row; /* Volta a ser row para os botões ficarem lado a lado na coluna de Ações */
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: var(--spacing-md);
+  }
+  .actions-container .btn-edit,
+  .actions-container .btn-delete {
+      width: calc(50% - (var(--spacing-md) / 2));
+      font-size: 0.85rem;
+      padding: var(--spacing-sm) var(--spacing-xs);
+  }
 }

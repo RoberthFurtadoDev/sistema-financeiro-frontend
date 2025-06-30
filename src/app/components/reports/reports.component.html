@@ -11,47 +11,58 @@
 
   <div class="balance-section card" *ngIf="!isLoading">
     <h3>Balanço Geral</h3>
-    <p *ngIf="userBalance">Seu Balanço Atual: <span class="balance-amount" [ngClass]="{'positive': userBalance.balance >= 0, 'negative': userBalance.balance < 0}">{{ userBalance.balance | currency:'BRL':'symbol':'1.2-2' }}</span></p>
+    <p *ngIf="userBalance">Seu Balanço Atual: <span class="balance-amount" [ngClass]="{'positive': userBalance.balance !== null && userBalance.balance >= 0, 'negative': userBalance.balance !== null && userBalance.balance < 0}">{{ userBalance.balance | currency:'BRL':'symbol':'1.2-2' }}</span></p>
     <p *ngIf="!userBalance && !isError && !message">Nenhum balanço encontrado.</p>
   </div>
 
   <div class="filters-section card" *ngIf="!isLoading">
     <h3>Filtrar Transações</h3>
-    <div class="filter-group">
-      <label for="filterStartDate">Data Início:</label>
-      <input type="date" id="filterStartDate" name="startDate" [(ngModel)]="startDate">
+    <div class="filter-controls">
+      <div class="form-group">
+        <label for="filterStartDate">Data Início:</label>
+        <input type="date" id="filterStartDate" name="startDate" [(ngModel)]="startDate">
+      </div>
+      <div class="form-group">
+        <label for="filterEndDate">Data Fim:</label>
+        <input type="date" id="filterEndDate" name="endDate" [(ngModel)]="endDate">
+      </div>
+      <div class="form-group">
+        <label for="filterCategory">Categoria:</label>
+        <select id="filterCategory" name="selectedCategoryId" [(ngModel)]="selectedCategoryId">
+          <option value="all">Todas as Categorias</option>
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }} ({{ category.type }})</option>
+        </select>
+      </div>
+      <button type="button" class="btn-primary" (click)="filterTransactions()" [disabled]="isLoading">Aplicar Filtro</button>
     </div>
-    <div class="filter-group">
-      <label for="filterEndDate">Data Fim:</label>
-      <input type="date" id="filterEndDate" name="endDate" [(ngModel)]="endDate">
-    </div>
-    <div class="filter-group">
-      <label for="filterCategory">Categoria:</label>
-      <select id="filterCategory" name="selectedCategoryId" [(ngModel)]="selectedCategoryId">
-        <option value="all">Todas as Categorias</option>
-        <option *ngFor="let category of categories" [value]="category.id">{{ category.name }} ({{ category.type }})</option>
-      </select>
-    </div>
-    <button type="button" class="btn-primary" (click)="filterTransactions()" [disabled]="isLoading">Aplicar Filtro</button>
   </div>
 
   <div class="charts-section card" *ngIf="!isLoading">
-    <h3>Visão Geral das Despesas por Categoria</h3>
-    <div class="chart-container" style="display: block;">
-      <canvas baseChart
-              [data]="pieChartData"
-              [options]="pieChartOptions"
-              [type]="pieChartType">
-      </canvas>
+    <div *ngIf="isLoading" class="loading-indicator">
+      Carregando gráficos...
     </div>
-
-    <h3>Visão Geral das Receitas por Categoria</h3>
-    <div class="chart-container" style="display: block;">
-      <canvas baseChart
-              [data]="barChartData"
-              [options]="barChartOptions"
-              [type]="barChartType">
-      </canvas>
+    <div *ngIf="!isLoading && (pieChartData.labels?.length || barChartData.labels?.length)" class="charts-grid">
+      <div class="chart-item">
+        <h3>Despesas por Categoria</h3>
+        <div class="chart-canvas-wrapper"> <canvas baseChart
+                                                   [data]="pieChartData"
+                                                   [options]="pieChartOptions"
+                                                   [type]="pieChartType">
+        </canvas>
+        </div>
+      </div>
+      <div class="chart-item">
+        <h3>Receitas por Categoria</h3>
+        <div class="chart-canvas-wrapper"> <canvas baseChart
+                                                   [data]="barChartData"
+                                                   [options]="barChartOptions"
+                                                   [type]="barChartType">
+        </canvas>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="!isLoading && (!pieChartData.labels?.length && !barChartData.labels?.length)" class="charts-placeholder">
+      <p>Não há dados para exibir nos gráficos.</p>
     </div>
   </div>
 
@@ -71,12 +82,12 @@
       </thead>
       <tbody>
       <tr *ngFor="let transaction of filteredTransactions">
-        <td>{{ transaction.id }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.amount | currency:'BRL':'symbol':'1.2-2' }}</td>
-        <td>{{ transaction.date | date:'dd/MM/yyyy' }}</td>
-        <td>{{ getCategoryName(transaction.categoryId) }}</td>
-        <td>{{ transaction.type }}</td>
+        <td data-label="ID">{{ transaction.id }}</td>
+        <td data-label="Descrição">{{ transaction.description }}</td>
+        <td data-label="Valor">{{ transaction.amount | currency:'BRL':'symbol':'1.2-2' }}</td>
+        <td data-label="Data">{{ transaction.date | date:'dd/MM/yyyy' }}</td>
+        <td data-label="Categoria">{{ getCategoryName(transaction.categoryId) }}</td>
+        <td data-label="Tipo">{{ transaction.type }}</td>
       </tr>
       </tbody>
     </table>

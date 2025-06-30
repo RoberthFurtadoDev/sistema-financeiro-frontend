@@ -9,7 +9,7 @@
     Carregando... Por favor, aguarde.
   </div>
 
-  <div class="form-section" *ngIf="!selectedCategory && !isLoading"> <h3>Adicionar Nova Categoria</h3>
+  <div class="form-section card" *ngIf="!selectedCategory && !isLoading"> <h3>Adicionar Nova Categoria</h3>
     <form (ngSubmit)="addCategory()">
       <div class="form-group">
         <label for="newCategoryName">Nome:</label>
@@ -26,7 +26,7 @@
     </form>
   </div>
 
-  <div class="form-section" *ngIf="selectedCategory && !isLoading"> <h3>Editar Categoria</h3>
+  <div class="form-section card" *ngIf="selectedCategory && !isLoading"> <h3>Editar Categoria</h3>
     <form (ngSubmit)="updateCategory()">
       <div class="form-group">
         <label for="editCategoryName">Nome:</label>
@@ -44,8 +44,7 @@
     </form>
   </div>
 
-  <div class="list-section">
-    <h3>Minhas Categorias</h3>
+  <div class="list-section card"> <h3>Minhas Categorias</h3>
     <p *ngIf="categories.length === 0 && !isLoading && !message">Nenhuma categoria encontrada.</p>
     <table *ngIf="categories.length > 0 && !isLoading">
       <thead>
@@ -58,12 +57,14 @@
       </thead>
       <tbody>
       <tr *ngFor="let category of categories">
-        <td>{{ category.id }}</td>
-        <td>{{ category.name }}</td>
-        <td>{{ category.type }}</td>
-        <td>
-          <button class="btn-edit" (click)="editCategory(category)">Editar</button>
-          <button class="btn-delete" (click)="deleteCategory(category.id!)">Excluir</button>
+        <td data-label="ID">{{ category.id }}</td>
+        <td data-label="Nome">{{ category.name }}</td>
+        <td data-label="Tipo">{{ category.type }}</td>
+        <td data-label="Ações">
+          <div class="actions-container">
+            <button class="btn-edit" (click)="editCategory(category)">Editar</button>
+            <button class="btn-delete" (click)="deleteCategory(category.id!)">Excluir</button>
+          </div>
         </td>
       </tr>
       </tbody>

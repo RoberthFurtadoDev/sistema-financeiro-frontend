@@ -9,16 +9,15 @@
     Carregando... Por favor, aguarde.
   </div>
 
-  <div class="form-section" *ngIf="!selectedTransaction && !isLoading">
-    <h3>Adicionar Nova Transação</h3>
+  <div class="form-section card" *ngIf="!selectedTransaction && !isLoading"> <h3>Adicionar Nova Transação</h3>
     <form (ngSubmit)="addTransaction()">
       <div class="form-group">
         <label for="newDescription">Descrição:</label>
-        <input type="text" id="newDescription" name="newDescription" [(ngModel)]="newTransaction.description" required>
+        <input type="text" id="newDescription" name="newDescription" [(ngModel)]="newTransaction.description" required placeholder="Ex: Conta de Luz, Salário">
       </div>
       <div class="form-group">
         <label for="newAmount">Valor:</label>
-        <input type="number" id="newAmount" name="newAmount" [(ngModel)]="newTransaction.amount" required min="0.01" step="0.01">
+        <input type="number" id="newAmount" name="newAmount" [(ngModel)]="newTransaction.amount" required min="0.01" step="0.01" placeholder="Ex: 150.75">
       </div>
       <div class="form-group">
         <label for="newDate">Data:</label>
@@ -31,12 +30,11 @@
           <option *ngFor="let category of categories" [value]="category.id">{{ category.name }} ({{ category.type }})</option>
         </select>
       </div>
-      <button type="submit" class="btn-primary" [disabled]="categories.length === 0 || newTransaction.categoryId === 0">Adicionar Transação</button>
+      <button type="submit" class="btn-primary" [disabled]="categories.length === 0 || newTransaction.categoryId === 0 || isLoading">Adicionar Transação</button>
     </form>
   </div>
 
-  <div class="form-section" *ngIf="selectedTransaction && !isLoading">
-    <h3>Editar Transação</h3>
+  <div class="form-section card" *ngIf="selectedTransaction && !isLoading"> <h3>Editar Transação</h3>
     <form (ngSubmit)="updateTransaction()">
       <div class="form-group">
         <label for="editDescription">Descrição:</label>
@@ -57,13 +55,12 @@
           <option *ngFor="let category of categories" [value]="category.id">{{ category.name }} ({{ category.type }})</option>
         </select>
       </div>
-      <button type="submit" class="btn-primary" [disabled]="categories.length === 0 || selectedTransaction.categoryId === 0">Atualizar Transação</button>
+      <button type="submit" class="btn-primary" [disabled]="categories.length === 0 || selectedTransaction.categoryId === 0 || isLoading">Atualizar Transação</button>
       <button type="button" class="btn-secondary" (click)="cancelEdit()">Cancelar</button>
     </form>
   </div>
 
-  <div class="list-section">
-    <h3>Minhas Transações</h3>
+  <div class="list-section card"> <h3>Minhas Transações</h3>
     <p *ngIf="transactions.length === 0 && !isLoading && !message">Nenhuma transação encontrada.</p>
     <table *ngIf="transactions.length > 0 && !isLoading">
       <thead>
@@ -79,15 +76,17 @@
       </thead>
       <tbody>
       <tr *ngFor="let transaction of transactions">
-        <td>{{ transaction.id }}</td>
-        <td>{{ transaction.description }}</td>
-        <td>{{ transaction.amount | currency:'BRL':'symbol':'1.2-2' }}</td>
-        <td>{{ transaction.date | date:'dd/MM/yyyy' }}</td>
-        <td>{{ getCategoryName(transaction.categoryId) }}</td>
-        <td>{{ transaction.type }}</td>
-        <td>
-          <button class="btn-edit" (click)="editTransaction(transaction)">Editar</button>
-          <button class="btn-delete" (click)="deleteTransaction(transaction.id!)">Excluir</button>
+        <td data-label="ID">{{ transaction.id }}</td>
+        <td data-label="Descrição">{{ transaction.description }}</td>
+        <td data-label="Valor">{{ transaction.amount | currency:'BRL':'symbol':'1.2-2' }}</td>
+        <td data-label="Data">{{ transaction.date | date:'dd/MM/yyyy' }}</td>
+        <td data-label="Categoria">{{ getCategoryName(transaction.categoryId) }}</td>
+        <td data-label="Tipo">{{ transaction.type }}</td>
+        <td data-label="Ações">
+          <div class="actions-container">
+            <button class="btn-edit" (click)="editTransaction(transaction)">Editar</button>
+            <button class="btn-delete" (click)="deleteTransaction(transaction.id!)">Excluir</button>
+          </div>
         </td>
       </tr>
       </tbody>

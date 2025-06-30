@@ -1,137 +1,96 @@
 /* src/app/components/currency/currency.component.css */
+
 .currency-container {
-  padding: 2rem;
+  padding: var(--spacing-xl);
   max-width: 900px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family-base);
+  color: var(--text-color-body);
 }
 
 h2 {
   text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-xl);
 }
 
+h3 {
+  text-align: left;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.5rem;
+}
+
+/* Seções e cards herdam de styles.css */
 .section.card {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+  /* Herda de .card em styles.css */
 }
 
-.section h3 {
-  text-align: center;
-  margin-bottom: 1.5rem;
-  color: #555;
-}
-
-.form-group {
-  margin-bottom: 1rem;
-}
-
-.form-group label {
-  display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #555;
-}
-
-.form-group input,
-.form-group select {
-  width: calc(100% - 20px);
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
-}
-
-.btn-primary {
-  padding: 10px 15px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  display: block;
-  width: 100%;
-  margin-top: 1rem;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-.btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+/* Formulários e botões herdam de styles.css */
+/* .form-group {} */
+/* .form-group label {} */
+/* .form-group input, .form-group select {} */
+/* .btn-primary {} */
 
 .conversion-result {
-  margin-top: 1.5rem;
-  padding-top: 1rem;
-  border-top: 1px solid #eee;
+  margin-top: var(--spacing-lg);
+  padding-top: var(--spacing-md);
+  border-top: 1px solid var(--border-color);
   text-align: center;
 }
 
 .conversion-result p {
-  margin: 0.5rem 0;
+  margin: var(--spacing-xs) 0;
   font-size: 1.1rem;
 }
 
 .converted-amount {
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #28a745; /* Verde para resultado */
+  font-size: 1.8rem; /* Maior para o valor convertido */
+  font-weight: 700;
+  color: var(--primary-granatum-green); /* Verde para destaque positivo */
 }
 
 .rates-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-  gap: 15px;
-  margin-top: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Ajuste a largura mínima das colunas */
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
 }
 
 .rate-item {
-  background-color: #f9f9f9;
-  padding: 10px;
-  border: 1px solid #eee;
-  border-radius: 4px;
+  background-color: #f9f9f9; /* Fundo suave para cada item de taxa */
+  padding: var(--spacing-sm);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius-sm);
   text-align: center;
   font-size: 0.9rem;
+  color: var(--text-color-body);
+  font-weight: 500;
 }
 
-/* Estilos para Mensagens (copiado dos outros componentes) */
-.message {
-  margin-top: 1rem;
-  padding: 10px;
-  border-radius: 4px;
-  text-align: center;
-  font-weight: bold;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
+.rate-item strong {
+  display: block; /* Moeda em uma linha, taxa na próxima */
+  font-size: 1.1rem;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-xs);
 }
 
-.message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
+/* Responsividade */
+@media (max-width: 768px) {
+  .currency-container {
+    padding: var(--spacing-md);
+  }
 
-.message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
+  h2 {
+    font-size: 2rem;
+  }
 
-/* Estilos para Indicador de Carregamento (copiado dos outros componentes) */
-.loading-indicator {
-  text-align: center;
-  padding: 20px;
-  font-weight: bold;
-  color: #007bff;
-  background-color: #e9f7ff;
-  border: 1px solid #cceeff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  .rates-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); /* Mais compacto em mobile */
+    gap: var(--spacing-sm);
+  }
 }

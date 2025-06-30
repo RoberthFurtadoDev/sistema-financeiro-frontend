@@ -11,8 +11,8 @@ import { CategoryExpense } from '../../models/category-expense.model';
 import { HttpErrorResponse } from '@angular/common/http';
 
 // Importações para gráficos
-import { BaseChartDirective, NgChartsModule } from 'ng2-charts'; // <--- CORREÇÃO: Adicionado NgChartsModule aqui
-import { ChartConfiguration, ChartData, ChartType, Chart } from 'chart.js';
+import { BaseChartDirective, NgChartsModule } from 'ng2-charts';
+import { ChartConfiguration, ChartData, Chart, ChartOptions } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 import { AuthService } from '../../services/auth.service';
@@ -20,7 +20,7 @@ import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-reports',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgChartsModule], // <--- CORREÇÃO: Usar NgChartsModule aqui
+  imports: [CommonModule, FormsModule, NgChartsModule],
   providers: [CurrencyPipe, DatePipe],
   templateUrl: './reports.component.html',
   styleUrls: ['./reports.component.css']
@@ -41,13 +41,17 @@ export class ReportsComponent implements OnInit {
   // --- PROPRIEDADES PARA GRÁFICOS ---
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
-  // Gráfico de Despesas por Categoria (Pizza)
-  public pieChartOptions: ChartConfiguration['options'] = {
+  public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
+    maintainAspectRatio: false,
     plugins: {
       legend: {
         display: true,
-        position: 'top',
+        position: 'right',
+        labels: {
+            font: { size: 12, family: 'var(--font-family-base)' },
+            color: 'var(--text-color-body)'
+        }
       },
       datalabels: {
         formatter: (value: any, ctx: any) => {
@@ -60,61 +64,111 @@ export class ReportsComponent implements OnInit {
           }
           return '';
         },
+        color: 'white',
+        font: { weight: 'bold', size: 11 }
       },
-    },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        bodyFont: { size: 14, family: 'var(--font-family-base)' },
+        titleFont: { size: 14, family: 'var(--font-family-base)', weight: 'bold' },
+        callbacks: {
+          label: function(context: any) {
+            const label = context.label || '';
+            const value = context.parsed || 0;
+            const currencyPipeInstance = (context.chart.options.plugins as any)?.tooltip?.customCurrencyPipe;
+            return `${label}: ${currencyPipeInstance?.transform(value, 'BRL', 'symbol', '1.2-2')}`;
+          }
+        },
+        componentInstance: null as any
+      } as any
+    } as any
   };
   public pieChartData: ChartData<'pie', number[], any> = {
     labels: [],
     datasets: [{
       data: [],
       backgroundColor: [],
+      hoverOffset: 10
     }]
   };
-  public pieChartType = 'pie' as ChartType;
+  public pieChartType: 'pie' = 'pie';
 
-  // Gráfico de Receitas por Categoria (Barra)
-  public barChartOptions: ChartConfiguration['options'] = {
+  public barChartOptions: ChartOptions<'bar'> = {
     responsive: true,
+    maintainAspectRatio: false,
     scales: {
-      x: {},
+      x: {
+        ticks: { font: { size: 12, family: 'var(--font-family-base)' }, color: 'var(--text-color-body)' },
+        grid: { display: false }
+      },
       y: {
         min: 0,
         ticks: {
-          callback: (value: any) => this.currencyPipe.transform(value, 'BRL', 'symbol', '1.2-2')
-        }
+          callback: (value: any) => this.currencyPipe.transform(value, 'BRL', 'symbol', '1.2-2'),
+          font: { size: 12, family: 'var(--font-family-base)' },
+          color: 'var(--text-color-body)'
+        },
+        grid: { color: 'rgba(0, 0, 0, 0.05)' }
       }
     },
     plugins: {
       legend: {
-        display: true,
-        position: 'top',
+        display: false,
+      },
+      tooltip: {
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
+        bodyFont: { size: 14, family: 'var(--font-family-base)' },
+        titleFont: { size: 14, family: 'var(--font-family-base)', weight: 'bold' },
+        callbacks: {
+          label: function(context: any) {
+            const label = context.dataset.label || '';
+            const value = context.parsed.y || 0;
+            const currencyPipeInstance = (context.chart.options.plugins as any)?.tooltip?.customCurrencyPipe;
+            return `${label}: ${currencyPipeInstance?.transform(value, 'BRL', 'symbol', '1.2-2')}`;
+          }
+        },
+        componentInstance: null as any
+      } as any,
+      datalabels: {
+        anchor: 'end',
+        align: 'end',
+        color: 'var(--text-color-heading)',
+        font: { weight: 'bold', size: 12 },
+        formatter: (value: number) => this.currencyPipe.transform(value, 'BRL', 'symbol', '1.2-2')
       }
-    }
+    } as any
   };
   public barChartData: ChartData<'bar'> = {
     labels: [],
     datasets: [
-      { data: [], label: 'Receitas Totais', backgroundColor: 'rgba(40, 167, 69, 0.7)' },
+      { data: [], label: 'Receitas Totais' },
     ]
   };
-  public barChartType = 'bar' as ChartType;
+  public barChartType: 'bar' = 'bar';
 
   constructor(
     private reportService: ReportService,
     private categoryService: CategoryService,
     private currencyPipe: CurrencyPipe,
     private authService: AuthService
-  ) {
-    Chart.register(ChartDataLabels);
-  }
+  ) {}
 
   ngOnInit(): void {
+    if (!this.pieChartOptions.plugins) { this.pieChartOptions.plugins = {}; }
+    if (!(this.pieChartOptions.plugins as any).tooltip) { (this.pieChartOptions.plugins as any).tooltip = {}; }
+    (this.pieChartOptions.plugins as any).tooltip.customCurrencyPipe = this.currencyPipe;
+
+    if (!this.barChartOptions.plugins) { this.barChartOptions.plugins = {}; }
+    if (!(this.barChartOptions.plugins as any).tooltip) { (this.barChartOptions.plugins as any).tooltip = {}; }
+    (this.barChartOptions.plugins as any).tooltip.customCurrencyPipe = this.currencyPipe;
+
     this.loadUserBalance();
     this.loadCategories();
     const today = new Date();
-    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1);
-    this.startDate = firstDayOfMonth.toISOString().slice(0, 10);
-    this.endDate = today.toISOString().slice(0, 10);
+    const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1).toISOString().slice(0, 10);
+    const lastDayOfMonth = today.toISOString().slice(0, 10);
+    this.startDate = firstDayOfMonth;
+    this.endDate = lastDayOfMonth;
     this.filterTransactions();
     this.loadExpenseChartData();
     this.loadIncomeChartData();
@@ -244,7 +298,10 @@ export class ReportsComponent implements OnInit {
     this.reportService.getTotalIncomesByCategory().subscribe({
       next: (data: CategoryExpense[]) => {
         this.barChartData.labels = data.map((item: CategoryExpense) => item.categoryName);
-        this.barChartData.datasets[0].data = data.map((item: CategoryExpense) => item.totalAmount);
+        const dataset = this.barChartData.datasets[0];
+        dataset.data = data.map((item: CategoryExpense) => item.totalAmount);
+        dataset.backgroundColor = this.generateRandomColors(data.length);
+
         if (this.chart) {
           this.chart.update();
         }
@@ -257,9 +314,18 @@ export class ReportsComponent implements OnInit {
 
   private generateRandomColors(numColors: number): string[] {
     const colors = [];
+    const granatumColors = [
+        '#0097D7', // Azul principal
+        '#16d136', // Seu verde
+        '#FFAE2E', // Laranja do Granatum
+        '#E32067', // Rosa/Magenta
+        '#9747FF', // Roxo
+        '#00D6E2', // Ciano
+        '#DBFF00', // Verde-limão
+        '#FF5388'  // Outro tom de rosa
+    ];
     for (let i = 0; i < numColors; i++) {
-      const hue = (i * 137.508) % 360;
-      colors.push(`hsl(${hue}, 70%, 50%)`);
+        colors.push(granatumColors[i % granatumColors.length]);
     }
     return colors;
   }
@@ -267,30 +333,19 @@ export class ReportsComponent implements OnInit {
   private handleError(err: HttpErrorResponse, operation: string): void {
     this.isError = true;
     console.error(`Erro ao ${operation}:`, err);
-
     let errorMessage = `Erro desconhecido ao ${operation}.`;
-    if (err.error && typeof err.error === 'object' && err.error.message) {
-        errorMessage = err.error.message;
-    } else if (err.message) {
-        errorMessage = err.message;
-    } else if (err.status === 0) {
-        errorMessage = `Não foi possível conectar ao servidor. Verifique sua conexão ou se o servidor está online.`;
-    }
-
+    if (err.error && typeof err.error === 'object' && err.error.message) { errorMessage = err.error.message; }
+    else if (err.message) { errorMessage = err.message; }
+    else if (err.status === 0) { errorMessage = `Não foi possível conectar ao servidor. Verifique sua conexão ou se o servidor está online.`; }
     this.message = `Erro ao ${operation}: ${errorMessage}`;
   }
 
   private clearMessageAfterDelay(): void {
-    setTimeout(() => {
-      this.message = '';
-      this.isError = false;
-    }, 5000);
+    setTimeout(() => { this.message = ''; this.isError = false; }, 5000);
   }
 
   getCategoryName(categoryId: number | undefined): string {
-    if (categoryId === undefined || categoryId === null) {
-        return 'N/A';
-    }
+    if (categoryId === undefined || categoryId === null) { return 'N/A'; }
     const category = this.categories.find(c => c.id === categoryId);
     return category ? category.name : 'N/A';
   }

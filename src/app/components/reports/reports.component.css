@@ -1,167 +1,220 @@
 /* src/app/components/reports/reports.component.css */
+
 .reports-container {
-  padding: 2rem;
+  padding: var(--spacing-xl);
   max-width: 900px;
   margin: 0 auto;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-family-base);
+  color: var(--text-color-body);
 }
 
 h2 {
   text-align: center;
-  color: #333;
-  margin-bottom: 2rem;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-xl);
 }
 
-.card {
-  background-color: #ffffff;
-  padding: 25px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  margin-bottom: 2rem;
+h3 {
+  text-align: left;
+  color: var(--text-color-heading);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.5rem;
 }
 
-.balance-section h3 {
+.balance-section {
   text-align: center;
-  margin-bottom: 1rem;
-  color: #555;
 }
 
 .balance-amount {
-  font-size: 1.8rem;
-  font-weight: bold;
+  font-size: 2.5rem;
+  font-weight: 700;
   display: block;
-  text-align: center;
-  margin-top: 1rem;
+  margin-top: var(--spacing-md);
 }
 
 .positive {
-  color: #28a745; /* Verde */
+  color: var(--success-color);
 }
 
 .negative {
-  color: #dc3545; /* Vermelho */
+  color: var(--error-color);
 }
 
-.filters-section h3 {
-  margin-bottom: 1.5rem;
-  color: #555;
+.filters-section {
+  /* Herda de .card */
 }
 
-.filter-group {
-  margin-bottom: 1rem;
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.filter-controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: var(--spacing-md);
+    align-items: end;
 }
 
-.filter-group label {
-  font-weight: bold;
-  color: #555;
-  flex-basis: 80px;
+.filter-controls .form-group {
+    margin-bottom: 0;
 }
 
-.filter-group input[type="date"],
-.filter-group select {
-  flex-grow: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.filter-controls button.btn-primary {
+    grid-column: 1 / -1;
+    margin-top: var(--spacing-md);
 }
 
-.btn-primary {
-  padding: 10px 20px;
-  border: none;
-  border-radius: 4px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  font-size: 1rem;
-  display: block;
-  width: 100%;
-  margin-top: 1.5rem;
-}
-
-.btn-primary:hover:not(:disabled) {
-  background-color: #0056b3;
-}
-.btn-primary:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-.message {
-  margin-top: 1rem;
-  padding: 10px;
-  border-radius: 4px;
-  text-align: center;
-  font-weight: bold;
-  opacity: 1;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.message.success {
-  background-color: #d4edda;
-  color: #155724;
-  border: 1px solid #c3e6cb;
-}
-
-.message.error {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 1px solid #f5c6cb;
-}
-
-.loading-indicator {
-  text-align: center;
-  padding: 20px;
-  font-weight: bold;
-  color: #007bff;
-  background-color: #e9f7ff;
-  border: 1px solid #cceeff;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-}
-
-.filtered-transactions-section h3 {
-  margin-bottom: 1rem;
-  color: #555;
-}
-
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
-
-table th, table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  text-align: left;
-}
-
-table th {
-  background-color: #f2f2f2;
-  font-weight: bold;
-}
-
-table tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-/* Estilos para a seção de gráficos */
 .charts-section {
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
-    align-items: center; /* Centraliza os gráficos */
+  /* Herda de .card */
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xl);
+  align-items: center;
 }
 
 .charts-section h3 {
-    width: 100%; /* Ocupa a largura total para centralizar o texto */
+  width: 100%;
+  text-align: center;
 }
 
-.chart-container {
-    width: 100%; /* Garante que o canvas ocupe o espaço disponível */
-    max-width: 600px; /* Limita o tamanho máximo do gráfico para melhor visualização */
-    margin: 0 auto; /* Centraliza o container do gráfico */
+.charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: var(--spacing-xl);
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.charts-grid .chart-item {
+    background-color: var(--background-card);
+    padding: var(--spacing-md);
+    border-radius: var(--border-radius-md);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.charts-grid .chart-item h4 {
+    font-size: 1.2rem;
+    color: var(--text-color-heading);
+    margin-bottom: var(--spacing-md);
+    text-align: center;
+}
+
+.chart-canvas-wrapper {
+    position: relative;
+    width: 100%;
+    height: 250px;
+    margin: 0 auto;
+}
+
+.chart-canvas-wrapper canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.charts-placeholder {
+  text-align: center;
+  padding: var(--spacing-xl);
+  border: 1px dashed var(--border-color);
+  border-radius: var(--border-radius-md);
+  color: var(--text-color-light);
+  font-style: italic;
+}
+
+.filtered-transactions-section {
+  /* Herda de .card */
+}
+
+/* --- REFINAMENTOS PARA MOBILE EM RELATÓRIOS --- */
+@media (max-width: 768px) {
+  .reports-container {
+    padding: var(--spacing-md);
+  }
+
+  h2 {
+    font-size: 2rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+
+  /* Filtros empilhados */
+  .filter-controls {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-controls button.btn-primary {
+    grid-column: auto;
+    width: 100%;
+  }
+
+  .balance-amount {
+    font-size: 2rem;
+  }
+
+  /* Gráficos empilhados */
+  .charts-grid {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-lg);
+  }
+
+  .chart-canvas-wrapper {
+    height: 200px;
+  }
+
+  /* Estilos para tabelas em mobile (similar a categorias/transações) */
+  .filtered-transactions-section table {
+    display: block;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .filtered-transactions-section table thead,
+  .filtered-transactions-section table tbody,
+  .filtered-transactions-section table th,
+  .filtered-transactions-section table td,
+  .filtered-transactions-section table tr {
+      display: block;
+  }
+
+  .filtered-transactions-section table tr {
+      margin-bottom: var(--spacing-md);
+      border: 1px solid var(--border-color);
+      border-radius: var(--border-radius-md);
+      padding: var(--spacing-md);
+  }
+
+  .filtered-transactions-section table thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+  }
+
+  .filtered-transactions-section table td {
+      border: none;
+      border-bottom: 1px solid #eee;
+      position: relative;
+      padding-left: 50%;
+      text-align: right;
+      white-space: normal; /* Permite que o texto quebre */
+  }
+
+  .filtered-transactions-section table td:before {
+      content: attr(data-label);
+      position: absolute;
+      left: var(--spacing-md);
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      font-weight: bold;
+      text-align: left;
+      color: var(--text-color-heading);
+  }
+
+  .filtered-transactions-section table td:last-child {
+      border-bottom: none;
+  }
 }
